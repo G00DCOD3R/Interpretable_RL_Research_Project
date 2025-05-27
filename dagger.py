@@ -1,0 +1,168 @@
+import gymnasium as gym
+import numpy as np
+import random
+from stable_baselines3 import TD3
+from sklearn.tree import DecisionTreeRegressor, plot_tree, export_graphviz
+
+import copy 
+import graphviz 
+import matplotlib.pyplot as plt 
+import time 
+
+import pickle 
+
+
+def main():
+    env = gym.make('InvertedPendulum-v5', reset_noise_scale = 0.1)
+    expert = TD3.load("InvertedPendulum_models/td3_invpendulum-100k")
+    dt = DecisionTreeRegressor(random_state=42, max_leaf_nodes=10, max_depth=5)
+
+    best_dt = None 
+    best_score = 0 
+
+    # DAGGER parameters 
+    dagger_iters = 200 # number of dagger iterations 
+    rollouts = 5 # number of rollouts in each iteration
+    beta = 0.9 # learning rate, at iteration i we choose expert policy beta ^ i times
+
+    expansion_size = 5000 # mutually exclusive with rollouts parameter, 
+    # end iteration when dataset expanded by at least this number of samples
+
+    D = [] 
+
+    validation_scores = [] 
+
+    print("Starting {} DAGGER iterations".format(dagger_iters))
+    print("params:\nbeta = {}\trollouts = {}\n".format(beta, rollouts)) 
+
+    st_time = time.time() 
+
+    for iter_num in range(dagger_iters):
+
+        beta_i = pow(beta, iter_num) 
+        cur_D_size = len(D) 
+
+        print("dagger iteration = {}".format(iter_num)) 
+
+        # rollout till the new dataset size expanded by at least expansion_size (5k) elements
+        # or "rollouts" number of times 
+        while len(D) < cur_D_size + expansion_size: 
+        # for rollout in range(rollouts):
+
+            obs, _states = env.reset() 
+            while True:
+
+                choice = random.random()
+
+                # # Query only expert for baseline 
+                # beta_i = 1 
+                # choice = 0 
+
+                if choice < beta_i or iter_num == 0:
+                    action, _states = expert.predict(obs)
+                else:
+                    action = dt.predict(obs.reshape(1, -1))
+
+                D.append((obs, expert.predict(obs)[0])) 
+                obs, rewards, terminated, truncated, info = env.step(action)
+
+                if terminated or truncated:
+                    obs, info = env.reset()
+                    break 
+        
+        # Train DT on updated dataset D 
+
+        X_states, y_actions = zip(*D)
+        X_states = np.array(list(X_states)) 
+        y_actions = np.array(list(y_actions)) 
+
+        # print(X_states.shape) 
+        # print(y_actions.shape) 
+
+        print("fitting decision tree on {} samples".format(X_states.shape[0]))
+        print("{}s elapsed".format(round(time.time() - st_time, 2)))
+
+        dt.fit(X_states, y_actions)
+
+        validation_scores.append(validate(dt))
+
+        # can visualise the policy at each iteration 
+        # validate(dt, seeds=[1], visualisation=True)
+
+        # update the best policy 
+        if(validation_scores[-1] > best_score):
+            best_dt = copy.deepcopy(dt)
+            best_score = validation_scores[-1] 
+
+        print("validation score = {}\tbeta = {}".format(validation_scores[-1], beta_i))
+
+        # if significant drop in performance, stop and save both trees 
+        # if(best_score > 2000 and validation_scores[-1] < 500): 
+        #     # significant drop in performance 
+        #     with open('InvPen_Trees/debug_good.dump', 'wb') as file:
+        #         pickle.dump(best_dt, file)
+        #     with open('InvPen_Trees/debug_bad.dump', 'wb') as file:
+        #         pickle.dump(dt, file)
+        #     with open('InvPen_Trees/test_dataset.dump', 'wb') as file: 
+        #         pickle.dump(D, file) 
+        #     print("dumped both") 
+        #     return 
+    
+    # Store the optimal policy 
+    with open('InvPen_Trees/decision_tree.dump', 'wb') as file:
+        pickle.dump(best_dt, file) 
+
+    print(validation_scores) 
+    print(best_score) 
+
+    # plot the learning curve 
+    plt.figure()
+    plt.plot(range(dagger_iters), validation_scores) 
+    plt.show()
+
+    # plt.figure(figsize=(12, 8)) 
+    # plot_tree(dt, filled=True, feature_names= ['cart pos', 'angle', 'velocity', 'ang_vel'], class_names= ['force'])
+    # plt.show()
+
+    # plot the tree (tree_baseline.pdf file)
+    dot_data = export_graphviz(best_dt, out_file=None, feature_names=['cart pos', 'angle', 'velocity', 'ang_vel'], class_names=['force'], filled = True)
+
+    render_tree(dot_data)
+
+def render_tree(dot_data):
+    graph = graphviz.Source(dot_data)
+    graph.render("tree_baseline") 
+    # graph.view()
+
+"""
+Validate the decision tree policy, on 10 fixed seeds 
+Can also visualise the results 
+returns the average of those 10 iterations 
+"""
+def validate(policy, seeds = range(10, 20), visualisation = False): 
+    if visualisation:
+        validation_env = gym.make('InvertedPendulum-v5', render_mode = "human", reset_noise_scale = 0.01)
+    else:
+        validation_env = gym.make('InvertedPendulum-v5', reset_noise_scale = 0.01, max_episode_steps = 10000)
+    
+    result = 0 
+    for seed in seeds:
+        obs, _states = validation_env.reset(seed = seed)
+
+
+        while True:
+            action = policy.predict(obs.reshape(1, -1))
+
+            obs, rewards, terminated, truncated, info = validation_env.step(action)
+            result += rewards 
+
+            if terminated or truncated:
+                # validation_env.close()
+                break  
+    
+    result /= len(seeds) 
+    validation_env.close() 
+    return result 
+
+if __name__ == "__main__":
+    main() 
