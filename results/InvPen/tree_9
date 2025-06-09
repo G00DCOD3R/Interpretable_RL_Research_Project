@@ -1,0 +1,37 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="ang_vel <= -0.754\nsquared_error = 3.242\nsamples = 135342\nvalue = 0.011", fillcolor="#f0b88f"] ;
+1 [label="angle <= -0.008\nsquared_error = 3.342\nsamples = 27550\nvalue = -1.313", fillcolor="#fae7da"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+5 [label="squared_error = 2.306\nsamples = 16401\nvalue = -1.972", fillcolor="#ffffff"] ;
+1 -> 5 ;
+6 [label="cart pos <= -0.134\nsquared_error = 3.289\nsamples = 11149\nvalue = -0.344", fillcolor="#f3c5a3"] ;
+1 -> 6 ;
+13 [label="squared_error = 2.733\nsamples = 3725\nvalue = -1.647", fillcolor="#fdf3ed"] ;
+6 -> 13 ;
+14 [label="squared_error = 2.288\nsamples = 7424\nvalue = 0.31", fillcolor="#eead7f"] ;
+6 -> 14 ;
+2 [label="angle <= -0.007\nsquared_error = 2.653\nsamples = 107792\nvalue = 0.349", fillcolor="#eeac7c"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="cart pos <= -0.503\nsquared_error = 2.837\nsamples = 51670\nvalue = -0.209", fillcolor="#f2c09c"] ;
+2 -> 3 ;
+7 [label="squared_error = 2.161\nsamples = 3872\nvalue = 1.548", fillcolor="#e58139"] ;
+3 -> 7 ;
+8 [label="ang_vel <= 0.628\nsquared_error = 2.621\nsamples = 47798\nvalue = -0.352", fillcolor="#f3c5a4"] ;
+3 -> 8 ;
+9 [label="velocity <= 0.081\nsquared_error = 3.02\nsamples = 32459\nvalue = -0.698", fillcolor="#f6d1b7"] ;
+8 -> 9 ;
+11 [label="squared_error = 1.991\nsamples = 23914\nvalue = -1.11", fillcolor="#f9e0cf"] ;
+9 -> 11 ;
+12 [label="squared_error = 4.095\nsamples = 8545\nvalue = 0.455", fillcolor="#eda876"] ;
+9 -> 12 ;
+10 [label="squared_error = 0.985\nsamples = 15339\nvalue = 0.382", fillcolor="#eeab7b"] ;
+8 -> 10 ;
+4 [label="cart pos <= -0.03\nsquared_error = 1.934\nsamples = 56122\nvalue = 0.863", fillcolor="#ea9a60"] ;
+2 -> 4 ;
+15 [label="squared_error = 1.937\nsamples = 38420\nvalue = 0.599", fillcolor="#eca36e"] ;
+4 -> 15 ;
+16 [label="squared_error = 1.447\nsamples = 17702\nvalue = 1.436", fillcolor="#e6853f"] ;
+4 -> 16 ;
+}

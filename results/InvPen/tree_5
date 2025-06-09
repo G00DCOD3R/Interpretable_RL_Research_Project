@@ -1,0 +1,21 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="ang_vel <= -0.678\nsquared_error = 3.882\nsamples = 70757\nvalue = -0.09", fillcolor="#efb285"] ;
+1 [label="cart pos <= 0.027\nsquared_error = 2.801\nsamples = 17596\nvalue = -1.787", fillcolor="#fceee4"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+7 [label="squared_error = 1.762\nsamples = 12564\nvalue = -2.263", fillcolor="#ffffff"] ;
+1 -> 7 ;
+8 [label="squared_error = 3.413\nsamples = 5032\nvalue = -0.597", fillcolor="#f3c4a2"] ;
+1 -> 8 ;
+2 [label="angle <= -0.041\nsquared_error = 2.971\nsamples = 53161\nvalue = 0.472", fillcolor="#eb9e66"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="cart pos <= -0.415\nsquared_error = 3.257\nsamples = 16598\nvalue = -0.478", fillcolor="#f2bf9b"] ;
+2 -> 3 ;
+5 [label="squared_error = 2.457\nsamples = 3691\nvalue = 1.277", fillcolor="#e58139"] ;
+3 -> 5 ;
+6 [label="squared_error = 2.352\nsamples = 12907\nvalue = -0.98", fillcolor="#f6d1b7"] ;
+3 -> 6 ;
+4 [label="squared_error = 2.245\nsamples = 36563\nvalue = 0.904", fillcolor="#e88e4e"] ;
+2 -> 4 ;
+}

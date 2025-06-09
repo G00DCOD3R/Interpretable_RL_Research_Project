@@ -1,0 +1,29 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="ang_vel <= -0.47\nsquared_error = 3.62\nsamples = 127421\nvalue = -0.008", fillcolor="#f3c5a4"] ;
+1 [label="angle <= -0.012\nsquared_error = 3.492\nsamples = 33818\nvalue = -1.284", fillcolor="#fbede3"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+11 [label="squared_error = 2.682\nsamples = 20809\nvalue = -1.862", fillcolor="#ffffff"] ;
+1 -> 11 ;
+12 [label="squared_error = 3.396\nsamples = 13009\nvalue = -0.36", fillcolor="#f5d0b6"] ;
+1 -> 12 ;
+2 [label="angle <= -0.054\nsquared_error = 2.866\nsamples = 93603\nvalue = 0.453", fillcolor="#f0b78e"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="squared_error = 3.539\nsamples = 19452\nvalue = -0.667", fillcolor="#f7dac5"] ;
+2 -> 3 ;
+4 [label="velocity <= 0.019\nsquared_error = 2.275\nsamples = 74151\nvalue = 0.746", fillcolor="#eeae80"] ;
+2 -> 4 ;
+5 [label="cart pos <= -0.467\nsquared_error = 1.971\nsamples = 61485\nvalue = 0.515", fillcolor="#f0b58b"] ;
+4 -> 5 ;
+7 [label="squared_error = 0.575\nsamples = 6125\nvalue = 2.188", fillcolor="#e58139"] ;
+5 -> 7 ;
+8 [label="ang_vel <= 0.316\nsquared_error = 1.781\nsamples = 55360\nvalue = 0.329", fillcolor="#f1bb94"] ;
+5 -> 8 ;
+9 [label="squared_error = 1.76\nsamples = 23318\nvalue = -0.385", fillcolor="#f6d1b7"] ;
+8 -> 9 ;
+10 [label="squared_error = 1.155\nsamples = 32042\nvalue = 0.849", fillcolor="#eeab7a"] ;
+8 -> 10 ;
+6 [label="squared_error = 2.229\nsamples = 12666\nvalue = 1.87", fillcolor="#e78b49"] ;
+4 -> 6 ;
+}

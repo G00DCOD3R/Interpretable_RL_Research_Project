@@ -1,0 +1,37 @@
+digraph Tree {
+node [shape=box, style="filled", color="black", fontname="helvetica"] ;
+edge [fontname="helvetica"] ;
+0 [label="vely <= -0.331\nsquared_error = 0.9\nsamples = 35000\nvalue = [[-0.031]\n[0.006]]", fillcolor="#ffffff"] ;
+1 [label="ang0 <= 0.532\nsquared_error = 0.171\nsamples = 16445\nvalue = [[-0.862]\n[-0.85]]", fillcolor="#e89253"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+9 [label="vely <= -0.847\nsquared_error = 0.107\nsamples = 14998\nvalue = [[-0.953]\n[-0.835]]", fillcolor="#e68844"] ;
+1 -> 9 ;
+11 [label="squared_error = 0.084\nsamples = 14145\nvalue = [[-0.954]\n[-0.882]]", fillcolor="#e6853f"] ;
+9 -> 11 ;
+12 [label="squared_error = 0.175\nsamples = 853\nvalue = [[-0.937]\n[-0.063]]", fillcolor="#e99254"] ;
+9 -> 12 ;
+10 [label="squared_error = 0.339\nsamples = 1447\nvalue = [[0.075]\n[-1.0]]", fillcolor="#eeab7b"] ;
+1 -> 10 ;
+2 [label="ang2 <= -0.226\nsquared_error = 0.356\nsamples = 18555\nvalue = [[0.705]\n[0.765]]", fillcolor="#eead7f"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="a_vel0 <= -0.408\nsquared_error = 0.145\nsamples = 14175\nvalue = [[0.968]\n[0.808]]", fillcolor="#e88e4d"] ;
+2 -> 3 ;
+5 [label="squared_error = 0.06\nsamples = 13105\nvalue = [[0.966]\n[0.921]]", fillcolor="#e58139"] ;
+3 -> 5 ;
+6 [label="squared_error = 0.147\nsamples = 1070\nvalue = [[0.983]\n[-0.584]]", fillcolor="#e88e4e"] ;
+3 -> 6 ;
+4 [label="ang1 <= 0.313\nsquared_error = 0.555\nsamples = 4380\nvalue = [[-0.144]\n[0.628]]", fillcolor="#f4cbae"] ;
+2 -> 4 ;
+7 [label="ang2 <= 0.209\nsquared_error = 0.634\nsamples = 828\nvalue = [[0.222]\n[-0.549]]", fillcolor="#f7d7c0"] ;
+4 -> 7 ;
+15 [label="squared_error = 0.456\nsamples = 543\nvalue = [[0.736]\n[-0.442]]", fillcolor="#f1bc96"] ;
+7 -> 15 ;
+16 [label="squared_error = 0.211\nsamples = 285\nvalue = [[-0.756]\n[-0.751]]", fillcolor="#ea985d"] ;
+7 -> 16 ;
+8 [label="ang2 <= 0.212\nsquared_error = 0.318\nsamples = 3552\nvalue = [[-0.23]\n[0.903]]", fillcolor="#eda876"] ;
+4 -> 8 ;
+13 [label="squared_error = 0.264\nsamples = 2610\nvalue = [[-0.022]\n[0.992]]", fillcolor="#eba069"] ;
+8 -> 13 ;
+14 [label="squared_error = 0.201\nsamples = 942\nvalue = [[-0.805]\n[0.656]]", fillcolor="#e9965a"] ;
+8 -> 14 ;
+}

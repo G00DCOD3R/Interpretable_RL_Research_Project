@@ -1,0 +1,1 @@
+/usr/bin/python3 /home/user/.local/bin/rl_zoo3 train --algo td3 --env Swimmer-v4
