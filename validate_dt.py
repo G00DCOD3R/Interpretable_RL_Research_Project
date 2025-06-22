@@ -16,11 +16,11 @@ def main():
     expert, good = None, None 
     means = [] 
     stds = [] 
-    xs = range(4, 30)
+    xs = range(5, 100, 5)
 
     for MAX_NODES in xs:
 
-        with open(f'results/Swimmer/{MAX_NODES}.dump', 'rb') as file:
+        with open(f'results/Hopper/{MAX_NODES}.dump', 'rb') as file:
             dt = pickle.load(file) 
 
         # expert = TD3.load("InvertedPendulum_models/td3_invpendulum-100k")
@@ -50,7 +50,7 @@ def nice_plot(xs, means, stds):
 
     plt.plot(xs, means)
     plt.fill_between(xs, means - stds, means + stds, alpha = 0.2) 
-    plt.savefig("Swimmer_results")
+    plt.savefig("Hopper_results")
     plt.show() 
 
 """
@@ -70,7 +70,7 @@ check how well discrete expert would perform
 """
 def discrete_expert(policy):
     # env = gym.make("InvertedPendulum-v5", render_mode = "human", reset_noise_scale = 0.1, max_episode_steps = 10000)
-    env = gym.make("Swimmer-v5", render_mode = "human", reset_noise_scale = 0.1, max_episode_steps = 10000)
+    env = gym.make("Hopper-v5", render_mode = "human", reset_noise_scale = 0.1, max_episode_steps = 10000)
 
     while True: 
 
@@ -96,7 +96,7 @@ def validate(policy, seeds = range(10, 20), visualisation = False, good = None, 
         validation_env = gym.make('InvertedPendulum-v5', render_mode = "human")
     else:
         # validation_env = gym.make('InvertedPendulum-v5', reset_noise_scale = 0.01, max_episode_steps = 10000)
-        validation_env = gym.make('Swimmer-v5')
+        validation_env = gym.make('Hopper-v5')
     
     # For each seed run a simulation 
     results = [] 

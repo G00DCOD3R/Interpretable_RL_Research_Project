@@ -26,12 +26,12 @@ def main():
     best_score = 0 
 
     # DAGGER parameters 
-    dagger_iters = 10 # number of dagger iterations 
+    dagger_iters = 30 # number of dagger iterations 
     rollouts = 5 # number of rollouts in each iteration
     beta = 0.5 # learning rate, at iteration i we choose expert policy beta ^ i times
     random_seed = 55 # seed for random python library 
 
-    expansion_size = 5000 # mutually exclusive with rollouts parameter, 
+    expansion_size = 200 # mutually exclusive with rollouts parameter, 
     # end iteration when dataset expanded by at least this number of samples
 
     random.seed(random_seed)
@@ -105,7 +105,7 @@ def main():
         print("validation score = {}\tbeta = {}\tnodes = {}".format(validation_scores[-1], beta_i, MAX_NODES))
 
         # if significant drop in performance, stop and save both trees 
-        # if(best_score > 2000 and validation_scores[-1] < 500): 
+        # if(best_score >8000 and validation_scores[-1] < 1000): 
         #     # significant drop in performance 
         #     with open('InvPen_Trees/debug_good.dump', 'wb') as file:
         #         pickle.dump(best_dt, file)
@@ -136,7 +136,8 @@ def main():
 
     # plot the tree (tree_baseline.pdf file)
     # dot_data = export_graphviz(best_dt, out_file=None, feature_names=['cart pos', 'angle', 'velocity', 'ang_vel'], class_names=['force'], filled = True)
-    dot_data = export_graphviz(best_dt, out_file=None, feature_names=['ang0', 'ang1', 'ang2', 'velx', 'vely', 'a_vel0', 'a_vel1', 'a_vel2'], class_names=['torque1', 'torque2'], filled = True)
+    # dot_data = export_graphviz(best_dt, out_file=None, feature_names=['ang0', 'ang1', 'ang2', 'velx', 'vely', 'a_vel0', 'a_vel1', 'a_vel2'], class_names=['torque1', 'torque2'], filled = True)
+    dot_data = export_graphviz(best_dt, out_file=None, feature_names=['z_coord', 'ang0', 'ang1', 'ang2', 'ang3', 'vel_x', 'vel_z', 'ang_vel0', 'ang_vel1', 'ang_vel2', 'ang_vel3'], class_names=['torque1', 'torque2'], filled = True)
 
     render_tree(dot_data, MAX_NODES)
 
@@ -152,7 +153,7 @@ returns the average of those 10 iterations
 """
 def validate(policy, seeds = range(10, 20), visualisation = False): 
     if visualisation:
-        validation_env = gym.make('InvertedPendulum-v5', render_mode = "human", reset_noise_scale = 0.01)
+        validation_env = gym.make('Swimmer-v5', render_mode = "human", reset_noise_scale = 0.01)
     else:
         # validation_env = gym.make('InvertedPendulum-v5', reset_noise_scale = 0.1, max_episode_steps = 10000)
         validation_env = gym.make('Swimmer-v5')
